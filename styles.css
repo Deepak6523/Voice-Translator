@@ -1,0 +1,126 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    margin: 0;
+    color: #fff;
+}
+
+/* Main container with center alignment */
+.container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    width: 420px;
+    max-width: 90%;
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.8s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Header */
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Text Input (Aligned & Styled) */
+#text-input {
+    width: 100%;
+    height: 120px;
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    resize: none;
+    outline: none;
+    transition: all 0.3s ease;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+/* Text Input Focus Effect */
+#text-input:focus {
+    border-color: #ffcc00;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Language Dropdown */
+#language-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+#language-select:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Translate Button */
+#translate-btn {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background: linear-gradient(135deg, #ffcc00, #ff6600);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
+}
+
+#translate-btn:hover {
+    background: linear-gradient(135deg, #ff9900, #ff3300);
+    transform: translateY(-2px);
+}
+
+/* Translated Text */
+#translated-text {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 8px;
+    animation: fadeIn 0.6s ease-in-out;
+    width: 100%;
+    text-align: center;
+}
+
+/* Audio Player */
+#audio-player {
+    margin-top: 15px;
+    width: 100%;
+    display: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

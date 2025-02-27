@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Translator & Speech</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 Translate & Speak</h1>
+
+        <textarea id="text-input" placeholder="Type text to translate and speak..."></textarea>
+
+        <select id="language-select">
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="ja">Japanese</option>
+            <option value="hi">Hindi</option>
+        </select>
+
+        <button id="translate-btn">Translate & Speak 🎤</button>
+
+        <div id="translated-text"></div>
+    </div>
+
+    <script>
+        const translateBtn = document.getElementById('translate-btn');
+        const textInput = document.getElementById('text-input');
+        const languageSelect = document.getElementById('language-select');
+        const translatedText = document.getElementById('translated-text');
+
+        let voices = [];
+
+        function loadVoices() {
+            voices = window.speechSynthesis.getVoices();
+        }
+
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+        loadVoices();
+
+        function speakText(text, language) {
+            const speech = new SpeechSynthesisUtterance(text);
+            speech.lang = language;
+
+            let selectedVoice = voices.find(voice => voice.lang.startsWith(language));
+
+            if (!selectedVoice) {
+                const languageMap = {
+                    'ja': 'Google 日本語',
+                    'hi': 'Google हिन्दी',
+                    'fr': 'Google Français',
+                    'es': 'Google Español',
+                    'de': 'Google Deutsch'
+                };
+                selectedVoice = voices.find(voice => voice.name.includes(languageMap[language])) || voices[0];
+            }
+
+            if (selectedVoice) {
+                speech.voice = selectedVoice;
+            } else {
+                console.warn(`No voice found for ${language}. Using default.`);
+            }
+
+            window.speechSynthesis.speak(speech);
+        }
+
+        translateBtn.addEventListener('click', () => {
+            const text = textInput.value.trim();
+            const language = languageSelect.value;
+
+            if (!text) {
+                alert('Please enter some text.');
+                return;
+            }
+
+            translateBtn.textContent = 'Translating...';
+            translateBtn.disabled = true;
+
+            fetch('/translate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text, language }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                translateBtn.textContent = 'Translate & Speak 🎤';
+                translateBtn.disabled = false;
+
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    translatedText.textContent = `Translated: ${data.translated_text}`;
+                    speakText(data.translated_text, language);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+                translateBtn.textContent = 'Translate & Speak 🎤';
+                translateBtn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
