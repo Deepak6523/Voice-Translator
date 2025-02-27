@@ -1,4 +1,4 @@
-# Voice-Translator
+
 STRUCTURE
 /smart-translator/
 │── /static/
